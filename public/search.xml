@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Word Embedding介绍]]></title>
+    <url>%2Fblog%2F2019%2F08%2F15%2Fembedding%2F</url>
+    <content type="text"><![CDATA[文本特征选择就是在训练集中选择一个词汇子集的过程。 现在的方法不能直接处理文本数据，通过Word Embedding的方法将文本数据转化为数值型数据。如果将word看作文本的最小单元，可以将Word Embedding理解为一种映射，或者说是嵌入（embedding）到一个数值向量空间。之所以称之为Embedding，因为这种方法往往伴随着一种降维的思想。 就是把one-hot编码的词嵌入到一个低维空间。 常用的文本特征选择方法有 词频法 TF 词频逆文档频率法 TF-IDF 信息增益 IG 互信息 MI TF 和 IDF都是在不考虑分类分布的情况下消除低频词 Word Embedding的输入Word Embedding的输入是原始文本中一组不重叠的词汇，假设有句子：apple on a apple tree 为了方便处理，把这些词汇放在一个dictionary：[apple, on, a, tree] ，这个dictionary可以看做wordEmbedding的输入 Word Embedding的输出就是每一word的向量表示，最简单的方式就是one-hot编码方式，那么每一word都对应了一种数值表示。 apple对应的vector就是[1,0,0,0] a对应的是[0,0,1,0] Word Embedding的类型主要有两种： 基于频率 基于预测 基于频率的Word Embedding基于频率的Word Embedding又可以分为： Count Vector TF—IDF Vector Co-Occurence Vector 其本质都是基于one-hot，以频率为主的加权。 Count Vector假设有一个语料库C，其中有D个文档：$d_1,d_2,\dots,d_D$,$C$中一共有$N$个word，这$N$个word构成原始输入的dictionary，据此可以生成一个矩阵M，其规模为$D\times N$ 例子： 语料库内容如下： D1：He is a boy D2：She is a girl，good girl 那么可以构造一个$2\times 7$的矩阵 He She is a boy girl good D1 1 0 1 1 1 0 0 D2 0 1 1 1 0 2 1 每个文档用词向量来表示，那么dictionary很庞大，矩阵是稀疏的，大量的无用信息。通常的做法是选取出现次数最频繁的那些词来构建dictionary，例如top10000 TF-IDF上面的只考虑到了词频TF，也就是词在文档中出现的频率。TF越大，说明词在本文档中的重要性越高，对应的权重也就越高。这个思路大体上来说是对的，例如，对于一个主题是Cat的文档，显然Cat这个词汇在本文档中的出现频率会相对高。 但如果我们把视野扩展到整个语料库，会发现，像is，a等通用词汇，几乎在每个文档里出现的频率都很高。由此，我们可以得到这样的结论：对于一个word，如果在特定文档里出现的频率高，而在整个语料库里出现的频率低，那么这个word对于该文档的重要性就比较高。因此我们可以引入逆文档频率IDF（Inverse Document Frequency）的概念： ​ $IDF = log(N/n)$ N代表语料库中文档的总数，n代表某个word在n个文档中出现过。 因此当一个word出现的频繁，那么IDF就越小。IDF用来惩罚常用词汇，TF用来奖励那么特定文档中出现频繁的词汇。用$TF \times IDF$来表示词汇的权重，这样可以提取出来文档的关键词。 对于一个word， 如果在特定文档里出现的频率高，即TF较大，则反映出了该word在自己的文档中可能是比较关键的词。 在整个语料库里出现的频率低，即IDF较小，则排除了常用词的干扰。 例子： 语料库共有2个文档，其中一个文档名为d，且文档d一共有8个词汇。 cat只出现在文档d中，出现过4次； is在两个文档中都有出现，在d中出现了4次。 那么对于文档d进行提取关键词： $TF(‘cat’, d) = \frac{4}{8} = 0.5$ $TF(‘is’, d) = \frac{4}{8} = 0.5$ $IDF(‘cat’, d) = log(\frac21) = 0.301$ $IDF(‘is’, d) = log(\frac22) = 0$ 那么计算TF-IDF $TFIDF(‘cat’, d) = 0.5 \times 0.301 = 0.15$ $TFIDF(‘is’, d) = 0$ 这样就能找出来文件的关键词汇。 Co-Occurence Vector自然语言一大特色是语义和上下文。有如下著名的研究结果：相似的单词趋向于有相似的上下文(context)。举例： 那个人是个男孩 那个人是个女孩 Context Window 上下文窗口，需要定义其长度。例如： 定义窗口大小为2，则such的Context Window如图所示。 Co-Occurence（共现） 对于such这个单词来说，在其上下文窗口内，它分别与[she, is, a, beautiful]这四个单词各出现了一次共现。如果我们在语料库中所有such出现的地方，计算其共现的单词，并按次数累加，那么我们就可以利用其上下文范围内的单词来表示such这个词，这就是Co-Occurence Vector的计算方法。 假定有如下语料库： He is not lazy. He is intelligent. He is smart. 当窗口大小为2的时候，可以得到如下共现矩阵： 计算过程如图所示： 这种方法可以保留语义信息。 基于预测的Word Embedding算法满足 携带上下文信息 词的表示是稠密的 算法主要有CBOW和Skip-Gram CBOW （continues bag of words）本质是通过context来预测word 如图所示： 首先语料库内的每一word都可以用one-hot编码，假设选取context window为2，那么模型中的一对input和target就是： input：He 和 is 的one-hot编码 target：a 的 one-hot编码 算法步骤： 窗口大小为C/2，W：$V\times N$， $V =( \sum_{i=0}^{C} W\times C_i)/C$ 最终网络输出层才用softmax，即计算概率，与a 的one-hot编码作对比。该方法关注点在于hidden layer的输出，因此word是one-hot编码， 1234import tensorflow as tfhello = tf.constance('Hello Google!')sess = tf.Session()print(sess.run(hello))]]></content>
+      <categories>
+        <category>NLP</category>
+      </categories>
+      <tags>
+        <tag>embedding</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[hexo+next主题搭建]]></title>
+    <url>%2Fblog%2F2019%2F08%2F15%2Fhexo-next%E4%B8%BB%E9%A2%98%E6%90%AD%E5%BB%BA%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2Fblog%2F2019%2F08%2F15%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
