@@ -55,17 +55,22 @@
   };
 </script>
 
-  <meta name="description" content="Sharp tools make good work">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Ranger&#39;s blog">
-<meta property="og:url" content="http://qianghaopeng.gitee.io/blog/archives/index.html">
+  <meta name="description" content="奇异值分解（SVD）的原理与在降维中的应用 总结原理并讨论在PCA降维算法中如何运用SVD">
+<meta name="keywords" content="奇异值分解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="奇异值分解">
+<meta property="og:url" content="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/index.html">
 <meta property="og:site_name" content="Ranger&#39;s blog">
-<meta property="og:description" content="Sharp tools make good work">
+<meta property="og:description" content="奇异值分解（SVD）的原理与在降维中的应用 总结原理并讨论在PCA降维算法中如何运用SVD">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/blog/2019/08/17/奇异值分解/1.png">
+<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/blog/2019/08/17/奇异值分解/2.png">
+<meta property="og:updated_time" content="2019-08-17T06:18:23.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ranger&#39;s blog">
-<meta name="twitter:description" content="Sharp tools make good work">
-  <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/archives/">
+<meta name="twitter:title" content="奇异值分解">
+<meta name="twitter:description" content="奇异值分解（SVD）的原理与在降维中的应用 总结原理并讨论在PCA降维算法中如何运用SVD">
+<meta name="twitter:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/blog/2019/08/17/奇异值分解/1.png">
+  <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/">
 
 
 <script id="page-configurations">
@@ -73,13 +78,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
-    isArchive: true
+    isArchive: false
   };
 </script>
 
-  <title>归档 | Ranger's blog</title>
+  <title>奇异值分解 | Ranger's blog</title>
   
 
 
@@ -216,264 +221,228 @@
         <div class="content-wrap">
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-          <div id="content" class="content page-archive">
+          <div id="content" class="content page-post-detail">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-      <span class="archive-page-counter">
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qianghaopeng.gitee.io/blogblog/2019/08/17/奇异值分解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强浩鹏">
+      <meta itemprop="description" content="Sharp tools make good work">
+      <meta itemprop="image" content="blog/images/my.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ranger's blog">
+    </span>
+      <header class="post-header">
+
         
+          <h1 class="post-title" itemprop="name headline">奇异值分解
+
+            
+          </h1>
         
-        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-17 14:10:55 / 修改时间：14:18:23" itemprop="dateCreated datePublished" datetime="2019-08-17T14:10:55+08:00">2019-08-17</time>
+            </span>
           
-        
-        嗯..! 目前共计 6 篇日志。 继续努力。
-      </span>
-      
+            
 
-      
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="blog/categories/优化求解/" itemprop="url" rel="index"><span itemprop="name">优化求解</span></a></span>
 
-  
-  
-  
+                
+                
+              
+            </span>
+          
 
-  
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>1.4k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>1 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
     
-    <div class="collection-title">
-      <h1 class="archive-year" id="archive-year-2019">2019</h1>
-    </div>
-  
-  
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="blog/2019/08/17/奇异值分解/" itemprop="url">
-            
-              <span itemprop="name">奇异值分解</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-17T14:10:55+08:00"
-              content="2019-08-17">
-          08-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="blog/2019/08/17/hexo-next博客搭建3/" itemprop="url">
-            
-              <span itemprop="name">hexo-next博客搭建3-部署</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-17T10:33:15+08:00"
-              content="2019-08-17">
-          08-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="blog/2019/08/17/hexo-next博客搭建2/" itemprop="url">
-            
-              <span itemprop="name">hexo-next博客搭建2-设置</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-17T09:20:28+08:00"
-              content="2019-08-17">
-          08-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="blog/2019/08/16/hexo-next博客搭建1/" itemprop="url">
-            
-              <span itemprop="name">hexo+next博客搭建-安装</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-16T21:46:28+08:00"
-              content="2019-08-16">
-          08-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="blog/2019/08/15/embedding/" itemprop="url">
-            
-              <span itemprop="name">Word Embedding介绍</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-15T16:47:31+08:00"
-              content="2019-08-15">
-          08-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-  
-  
-  
-
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="blog/2019/08/15/hello-world/" itemprop="url">
-            
-              <span itemprop="name">Hello World</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-08-15T13:54:13+08:00"
-              content="2019-08-15">
-          08-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+      
+        <h1 id="奇异值分解（SVD）的原理与在降维中的应用"><a href="#奇异值分解（SVD）的原理与在降维中的应用" class="headerlink" title="奇异值分解（SVD）的原理与在降维中的应用"></a>奇异值分解（SVD）的原理与在降维中的应用</h1><blockquote>
+<p>总结原理并讨论在PCA降维算法中如何运用SVD</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="特征值和特征向量"><a href="#特征值和特征向量" class="headerlink" title="特征值和特征向量"></a>特征值和特征向量</h2><p>定义如下：<br>                         $Ax=\lambda x$<br>其中$A$是一个$n\times n$的矩阵，即是个方阵；<br>x是一个n维向量。<br>我们可以将矩阵A特征分解，如果我们求出来矩阵A的n个特征值，$\lambda_1 \leq \lambda_2\leq,\dots ,\lambda_n$以及这n个特征值所对应的特征向量$\{ w_1,w_2,\dots,w_n \}$如果这n个特征向量线性无关，则矩阵A就能对角化，表示为：$W^{-1}AW=\Sigma$<br>所以得到$ A=W\Sigma W^{-1}$<br>W是n个特征向量张成的$n\times n$维矩阵，$\Sigma$为主对角线为特征值的对角矩阵。<br>一般会把W这n个特征向量标准化，即满足$||w_i||_2=1$,或者说$w_{i}^{T}w_i=1$,此时W的n个特征向量为标准正交基，满足$W^TW=I$，即$W^T=W^{-1}$，也就是W是酋矩阵</p>
+<p>这样得到特征分解表达式：<br>                         $A=W\Sigma W^T$</p>
+<blockquote>
+<p><strong>注意</strong>：特征分解，矩阵A必须是方阵</p>
+</blockquote>
+<h2 id="SVD-奇异值分解"><a href="#SVD-奇异值分解" class="headerlink" title="SVD 奇异值分解"></a>SVD 奇异值分解</h2><p>如果A不是方阵，采用奇异值分解</p>
+<p>假定矩阵A是一个$m\times n$的矩阵，定义矩阵A的SVD分解为：$A=U\Sigma V^T$<br>其中U是一个$m\times n$的矩阵，$\Sigma$是一个$m\times n$的矩阵，是对角矩阵，即除对角线元素以外全为0，主对角线上的每个元素都称为奇异值，V是一个$n\times n$的矩阵。U和V都是酋矩阵，即满足$U^TU=I,V^TV=I$。<br><img src="blog/2019/08/17/奇异值分解/1.png"><br>如果将A的转置和A做矩阵乘法，就会得到一个$n\times n$的方阵：$A^TA$。就可以对这个方阵做特征值分解，满足：$(A^TA)v_i=\lambda_iv_i$<br>将$A^TA$的所有特征向量张成一个$n\times n$的酋矩阵V，一般称V的特征向量为右奇异值向量<br>同理：将A和A的转置做矩阵乘法，得到一个$m\times m$的方阵：$AA^T$。其这个方阵进行特征分解，得到一个$m\times m$的酋矩阵U，称为左奇异值向量。</p>
+<p>$A=U\Sigma V^T\Longrightarrow AV=U\Sigma V^TV \Longrightarrow AV = U\Sigma \Longrightarrow Av_i=\sigma_iu_i \Longrightarrow \sigma_i=\frac{Av_i}{u_i}$</p>
+<p>其实也是 $U^TAV=\Sigma$</p>
+<p>证明：</p>
+<p>以V矩阵为例：</p>
+<p>$A=U\Sigma V^T \Longrightarrow A^T=V\Sigma ^TU^T \Longrightarrow A^TA=V\Sigma ^TU^TU\Sigma V^T=V\Sigma ^2V^T$ </p>
+<p>其中：$U^TU=I,\Sigma ^T\Sigma=\Sigma^2$</p>
+<p>$AA^T,A^TA$的特征值等于奇异值的平方。<br><img src="blog/2019/08/17/奇异值分解/2.png"><br><strong>奇异值矩阵中，前10%或者1%的奇异值的和就占据了全部奇异值之和的99%。所以可以用k个奇异值和对应的左右奇异值向量来近似描述矩阵。</strong></p>
 
     </div>
+
+    
+    
+    
+    
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="blog/images/wechatpay.png" alt="强浩鹏 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>强浩鹏</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/" title="奇异值分解">http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="blog/tags/奇异值分解/" rel="tag"><i class="fa fa-tag"></i>奇异值分解</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="blog/2019/08/17/hexo-next博客搭建3/" rel="next" title="hexo-next博客搭建3-部署">
+                  <i class="fa fa-chevron-left"></i> hexo-next博客搭建3-部署
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </div>
   
   
   
+  </article>
 
-  
-
+  </div>
 
 
           </div>
           
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjA5NC8yMjYwNQ"></div>
+  </div>
+  
+  
 
         </div>
           
@@ -488,8 +457,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -611,6 +589,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#奇异值分解（SVD）的原理与在降维中的应用"><span class="nav-number">1.</span> <span class="nav-text">奇异值分解（SVD）的原理与在降维中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征值和特征向量"><span class="nav-number">1.1.</span> <span class="nav-text">特征值和特征向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVD-奇异值分解"><span class="nav-number">1.2.</span> <span class="nav-text">SVD 奇异值分解</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
         <div class="back-to-top motion-element">
           <i class="fa fa-arrow-up"></i>
           
@@ -788,7 +783,24 @@
 
 
   
+  <script src="blog/js/scrollspy.js?v=7.3.0"></script>
+<script src="blog/js/post-details.js?v=7.3.0"></script>
+
+
     
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
 
 </body>
 </html>
