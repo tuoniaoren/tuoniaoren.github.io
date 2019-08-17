@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/icon32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/icon16.png?v=7.3.0">
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="主要一些功能的实现，包括：  插入本地图像  latex公式显示  阅读时长加字数统计  代码块设置  打赏功能  评论功能  分享功能  等等">
+<meta name="keywords" content="功能实现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hexo-next博客搭建2-设置">
+<meta property="og:url" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/index.html">
+<meta property="og:site_name" content="Ranger&#39;s blog">
+<meta property="og:description" content="主要一些功能的实现，包括：  插入本地图像  latex公式显示  阅读时长加字数统计  代码块设置  打赏功能  评论功能  分享功能  等等">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/1.png">
+<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/2.jpg">
+<meta property="og:updated_time" content="2019-08-17T02:37:16.239Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hexo-next博客搭建2-设置">
+<meta name="twitter:description" content="主要一些功能的实现，包括：  插入本地图像  latex公式显示  阅读时长加字数统计  代码块设置  打赏功能  评论功能  分享功能  等等">
+<meta name="twitter:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/1.png">
+  <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>hexo-next博客搭建2-设置 | Ranger's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ranger's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qianghaopeng.gitee.io/blog/blog/2019/08/17/hexo-next博客搭建2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强浩鹏">
+      <meta itemprop="description" content="Sharp tools make good work">
+      <meta itemprop="image" content="/blog/images/my.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ranger's blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">hexo-next博客搭建2-设置
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-17 09:20:28 / 修改时间：10:37:16" itemprop="dateCreated datePublished" datetime="2019-08-17T09:20:28+08:00">2019-08-17</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>2k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>2 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>主要一些功能的实现，包括：</p>
+<ul>
+<li><p>插入本地图像</p>
+</li>
+<li><p>latex公式显示</p>
+</li>
+<li><p>阅读时长加字数统计</p>
+</li>
+<li><p>代码块设置</p>
+</li>
+<li><p>打赏功能</p>
+</li>
+<li><p>评论功能</p>
+</li>
+<li><p>分享功能</p>
+</li>
+<li><p>等等</p>
+<a id="more"></a>
+<h2 id="添加图像"><a href="#添加图像" class="headerlink" title="添加图像"></a>添加图像</h2></li>
+<li>首先站点配置文件里面的<code>post_asset_folder</code>设置为<code>true</code></li>
+<li>在git bash输入<code>npm install hexo-asset-image --save</code></li>
+<li>之后在生成博文的时候，默认也会在<code>/source/_posts</code>中生成一个同名的文件夹，把图片放到对应的文件夹下，采用<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% asset_img 图像名 图像描述 %&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="latex公式显示"><a href="#latex公式显示" class="headerlink" title="latex公式显示"></a>latex公式显示</h2><ul>
+<li><p>更换hexo的渲染引擎</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm uninstall hexo-renderer-marked</span><br><span class="line">npm install hexo-renderer-kramed --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入next的配置文件，打开<code>mathjax</code>开关，设置为<code>true</code></p>
+</li>
+<li>解决语义冲突，在hexo的目录找到<code>node_modules\kramed\lib\rules\inline.js</code>，在该文件中找到<code>escape</code>和<code>em</code>字段进行如下修改：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">escape: /^\\([`*\[\]()#$+\-.!_&gt;])/,</span><br><span class="line">em: /^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样就可以使用latex公式了。</p>
+<h2 id="文章内超链接文本样式"><a href="#文章内超链接文本样式" class="headerlink" title="文章内超链接文本样式"></a>文章内超链接文本样式</h2><p>要求：超链接文本与普通文字区分<br>在<code>themes\next\source\css\_common\components\post\post.styl</code>中最后部分添加如下代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">.post-body p a&#123;</span><br><span class="line">color: #0593d3; //原始链接颜色</span><br><span class="line">border-bottom: none;</span><br><span class="line">border-bottom: 1px solid #0593d3; //底部分割线颜色</span><br><span class="line">&amp;:hover &#123;</span><br><span class="line">color: #fc6423; //鼠标经过颜色</span><br><span class="line">border-bottom: none;</span><br><span class="line">border-bottom: 1px solid #fc6423; //底部分割线颜色</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="文章底部注释版权"><a href="#文章底部注释版权" class="headerlink" title="文章底部注释版权"></a>文章底部注释版权</h2><p>直接采用next的主题配置文件中，定位到<code>creative_commons</code>下的<code>post</code>，将false改成true</p>
+<h2 id="添加阅读时长和字数"><a href="#添加阅读时长和字数" class="headerlink" title="添加阅读时长和字数"></a>添加阅读时长和字数</h2><ul>
+<li><p>安装hexo-symbols-count-time</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-symbols-count-time</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置hexo，在站点配置文件末尾添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  symbols: true #字数</span><br><span class="line">  time: true #阅读时长</span><br><span class="line">  total_symbols: true # 所有文章总字数</span><br><span class="line">  total_time: true #总时长</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置next，修改主题配置设置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">symbols_count_time:</span><br><span class="line">  separated_meta: true</span><br><span class="line">  item_text_post: true</span><br><span class="line">  item_text_total: true</span><br><span class="line">  awl: 4</span><br><span class="line">  wpm: 275</span><br><span class="line">  </span><br><span class="line">busuanzi_count:</span><br><span class="line">  enable: true</span><br><span class="line">  total_visitors: true</span><br><span class="line">  total_visitors_icon: user</span><br><span class="line">  total_views: true</span><br><span class="line">  total_views_icon: eye</span><br><span class="line">  post_views: true</span><br><span class="line">  post_views_icon: eye</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启hexo服务</p>
+<h2 id="hexo首页文章显示一部分"><a href="#hexo首页文章显示一部分" class="headerlink" title="hexo首页文章显示一部分"></a>hexo首页文章显示一部分</h2><p>在文章中添加<code>&lt;!--more--&gt;</code>标记，只显示标记之前的内容。</p>
+</li>
+</ul>
+<h2 id="代码块设置"><a href="#代码块设置" class="headerlink" title="代码块设置"></a>代码块设置</h2><p>一共5种样式：normal，night，night blue， night eighties<br>在主题配置文件中<code>highlight_theme</code>设置，同时设置复制按钮，在<code>copy_button.enable</code>中设置<code>true</code>，<code>show_result</code>中设置<code>true</code></p>
+<h2 id="标签设置"><a href="#标签设置" class="headerlink" title="标签设置"></a>标签设置</h2><p>不喜欢#标签，可以设置<code>tag_icon: true</code>,还可以启用标签云, <code>tagcloud</code>为<code>true</code></p>
+<h2 id="打赏"><a href="#打赏" class="headerlink" title="打赏"></a>打赏</h2><p>将图片放在<strong>images</strong>，设置<code>Reward</code>中微信或者支付宝。</p>
+<h2 id="侧栏中显示进度条"><a href="#侧栏中显示进度条" class="headerlink" title="侧栏中显示进度条"></a>侧栏中显示进度条</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">back2top:</span><br><span class="line">  enable: true  #打开后默认在右侧</span><br><span class="line">  # Back to top in sidebar.</span><br><span class="line">  sidebar: true #打开后在侧栏</span><br></pre></td></tr></table></figure>
+<h2 id="分享功能"><a href="#分享功能" class="headerlink" title="分享功能"></a>分享功能</h2><p>添加addthis，具体操作请参看博客（<a href="https://jasonssun.github.io/2019/06/15/Hexo搭建博客NexT主题之AddThis分享文章的配置/）" target="_blank" rel="noopener">https://jasonssun.github.io/2019/06/15/Hexo搭建博客NexT主题之AddThis分享文章的配置/）</a><br><img src="/blog/2019/08/17/hexo-next博客搭建2/1.png"></p>
+<h2 id="评论功能"><a href="#评论功能" class="headerlink" title="评论功能"></a>评论功能</h2><p>这里我使用的<a href="https://www.livere.com" target="_blank" rel="noopener">来比力</a>，进入该网站注册账号，登录后选择上方关键字<strong>安装</strong>，选择免费版本，然后会得到来比力city版安装代码<br><img src="/blog/2019/08/17/hexo-next博客搭建2/2.jpg"><br>在主题配置文件中查找关键字<code>livere_uid</code>，将data-uid等号后面，引号之中的内容复制到过来，注意如果有<code>==</code>，要删除。</p>
+
+    </div>
+
+    
+    
+    
+    
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/blog/images/wechatpay.png" alt="强浩鹏 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>强浩鹏</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/" title="hexo-next博客搭建2-设置">http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/功能实现/" rel="tag"><i class="fa fa-tag"></i>功能实现</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2019/08/16/hexo-next博客搭建1/" rel="next" title="hexo+next博客搭建-安装">
+                  <i class="fa fa-chevron-left"></i> hexo+next博客搭建-安装
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2019/08/17/hexo-next博客搭建3/" rel="prev" title="hexo-next博客搭建3-部署">
+                  hexo-next博客搭建3-部署 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjA5NC8yMjYwNQ"></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/blog/images/my.jpg"
+      alt="强浩鹏">
+  <p class="site-author-name" itemprop="name">强浩鹏</p>
+  <div class="site-description motion-element" itemprop="description">Sharp tools make good work</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/blog/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/blog/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/tuoniaoren" title="GitHub &rarr; https://github.com/tuoniaoren" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/blog/1244253818@qq.com" title="E-Mail &rarr; 1244253818@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/6132591078" title="Weibo &rarr; https://weibo.com/6132591078" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://blog.csdn.net/qq_35296537" title="CSDN &rarr; https://blog.csdn.net/qq_35296537" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>CSDN</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#添加图像"><span class="nav-number">1.</span> <span class="nav-text">添加图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#latex公式显示"><span class="nav-number">2.</span> <span class="nav-text">latex公式显示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章内超链接文本样式"><span class="nav-number">3.</span> <span class="nav-text">文章内超链接文本样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章底部注释版权"><span class="nav-number">4.</span> <span class="nav-text">文章底部注释版权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加阅读时长和字数"><span class="nav-number">5.</span> <span class="nav-text">添加阅读时长和字数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hexo首页文章显示一部分"><span class="nav-number">6.</span> <span class="nav-text">hexo首页文章显示一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码块设置"><span class="nav-number">7.</span> <span class="nav-text">代码块设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标签设置"><span class="nav-number">8.</span> <span class="nav-text">标签设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打赏"><span class="nav-number">9.</span> <span class="nav-text">打赏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#侧栏中显示进度条"><span class="nav-number">10.</span> <span class="nav-text">侧栏中显示进度条</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分享功能"><span class="nav-number">11.</span> <span class="nav-text">分享功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#评论功能"><span class="nav-number">12.</span> <span class="nav-text">评论功能</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <span id="sitetime"></span>
+<script language=javascript>
+    function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2019,08,15,15,00,00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-强浩鹏"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">强浩鹏</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">9k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">8 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+  <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d561d7780745ba9" async="async"></script>
+</div>
+
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/blog/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/blog/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/blog/js/utils.js?v=7.3.0"></script>
+  <script src="/blog/js/motion.js?v=7.3.0"></script>
+
+<script src="/blog/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+
+<script src="/blog/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.3.0"></script>
+<script src="/blog/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>
