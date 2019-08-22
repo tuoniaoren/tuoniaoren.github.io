@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/icon32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/icon16.png?v=7.3.0">
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":true,"show_result":true,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="前言 总结自己在做一个小的图像分类时的经验，采用的框架：pytroch，基于一个只有２００张图像的农业害虫数据集，害虫种类有１０类，数据集的质量较差。">
+<meta name="keywords" content="深度学习,图像分类，pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像分类实践1总结">
+<meta property="og:url" content="http://qianghaopeng.gitee.io/blog/2019/08/22/图像分类实践1总结/index.html">
+<meta property="og:site_name" content="Ranger&#39;s blog">
+<meta property="og:description" content="前言 总结自己在做一个小的图像分类时的经验，采用的框架：pytroch，基于一个只有２００张图像的农业害虫数据集，害虫种类有１０类，数据集的质量较差。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/22/md8nMQ.png">
+<meta property="og:updated_time" content="2019-08-22T05:55:25.735Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像分类实践1总结">
+<meta name="twitter:description" content="前言 总结自己在做一个小的图像分类时的经验，采用的框架：pytroch，基于一个只有２００张图像的农业害虫数据集，害虫种类有１０类，数据集的质量较差。">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/22/md8nMQ.png">
+  <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/2019/08/22/图像分类实践1总结/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>图像分类实践1总结 | Ranger's blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <div class="container sidebar-position-left">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Ranger's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/blog/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qianghaopeng.gitee.io/blog/blog/2019/08/22/图像分类实践1总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强浩鹏">
+      <meta itemprop="description" content="Sharp tools make good work">
+      <meta itemprop="image" content="/blog/images/my.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ranger's blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">图像分类实践1总结
+
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-22 13:53:44 / 修改时间：13:55:25" itemprop="dateCreated datePublished" datetime="2019-08-22T13:53:44+08:00">2019-08-22</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/深度学习/" itemprop="url" rel="index"><span itemprop="name">深度学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>3.9k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>4 分钟</span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>前言</strong></p>
+<p>总结自己在做一个小的图像分类时的经验，采用的框架：pytroch，基于一个只有２００张图像的农业害虫数据集，害虫种类有１０类，数据集的质量较差。</p>
+<a id="more"></a>
+<h2 id="数据集小导致过拟合"><a href="#数据集小导致过拟合" class="headerlink" title="数据集小导致过拟合"></a>数据集小导致过拟合</h2><p>误区一：由于自己炼丹次数太少，在训练模型这块没啥经验，一开始采用ResNet34，但是由于数据集太小，导致模型训练时准确率很高，但是在测试时很低。自己调试了很多参数都不行，查了一下，才想起来其实是<strong>过拟合</strong>了。更换了最简单５个卷积层，３个全连接的结构，效果有不小的提升。</p>
+<h2 id="pytorch的问题"><a href="#pytorch的问题" class="headerlink" title="pytorch的问题"></a>pytorch的问题</h2><h3 id="维度不一致"><a href="#维度不一致" class="headerlink" title="维度不一致"></a>维度不一致</h3><p>在神经网络编程中，维度不一致是非常常见的问题。虽然pytorch相比tensorflow已经很好debug了，但是由于数据要转存到ＧＰＵ中，我在pycharm中实践去debug时，还是遇到很慢，而且也很不方便。百度查到了一个很好用的包:<code>torchsummary</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip install torchsummary</span><br></pre></td></tr></table></figure></p>
+<p>以查看我写的EasyNet网络为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from config import opt</span><br><span class="line">import os</span><br><span class="line">import torch as t</span><br><span class="line">from models import EasyNet</span><br><span class="line">from torchsummary import summary</span><br><span class="line"># step1: load model</span><br><span class="line"></span><br><span class="line">if not os.path.exists(opt.checkpoint_root):</span><br><span class="line">    os.makedirs(opt.checkpoint_root)</span><br><span class="line"></span><br><span class="line">easynet = EasyNet()</span><br><span class="line">if opt.use_gpu:</span><br><span class="line">    easynet = easynet.cuda()</span><br><span class="line">summary(easynet, (3, 224, 224))</span><br></pre></td></tr></table></figure></p>
+<p>当网络出现维度问题，且我们查找问题并没有发现，并且数据集有很大，我们就可以加入这个包，<code>summary(easynet, (3, 224, 224))</code>：其实就是向网络加入一个batchsize=2的测试数据，我们就可以debug这句话，从而找到问题所处，还是比较方便。</p>
+<h3 id="pytorch中，将label变成one-hot编码的形式"><a href="#pytorch中，将label变成one-hot编码的形式" class="headerlink" title="pytorch中，将label变成one hot编码的形式"></a>pytorch中，将label变成one hot编码的形式</h3><p>这里参看了一篇非常优质的博客：</p>
+<p><a href="https://blog.csdn.net/qq_34914551/article/details/88700334" target="_blank" rel="noopener">Pytorch中，将label变成one hot编码的两种方式</a><br>将一个mini batch的label向量变成形状为[batch size, class numbers]<br>主要有两种实现方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor.scatter_</span><br><span class="line">tensor.index_select</span><br></pre></td></tr></table></figure></p>
+<h4 id="scatter-获得one-hot-编码"><a href="#scatter-获得one-hot-编码" class="headerlink" title="scatter_获得one hot 编码"></a>scatter_获得one hot 编码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tensor.scatter_(dim, index, src)</span><br><span class="line">dim: 指明依托的维度</span><br><span class="line">index: 告诉将src中对应的值放在对应的那个位置</span><br><span class="line">src: 用来做替换的值，其中index的shape一定要和src保持一致</span><br></pre></td></tr></table></figure>
+<p>例子：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> torch</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = torch.rand(<span class="number">2</span>, <span class="number">5</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x</span><br><span class="line">tensor([[<span class="number">0.8443</span>, <span class="number">0.7421</span>, <span class="number">0.8100</span>, <span class="number">0.9166</span>, <span class="number">0.6908</span>],</span><br><span class="line">        [<span class="number">0.1860</span>, <span class="number">0.5211</span>, <span class="number">0.1552</span>, <span class="number">0.8594</span>, <span class="number">0.5856</span>]])</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>torch.zeros(<span class="number">3</span>, <span class="number">5</span>).scatter_(<span class="number">0</span>, torch.LongTensor([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>], [<span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]]), x)</span><br><span class="line">tensor([[<span class="number">0.8443</span>, <span class="number">0.5211</span>, <span class="number">0.1552</span>, <span class="number">0.9166</span>, <span class="number">0.6908</span>],</span><br><span class="line">        [<span class="number">0.0000</span>, <span class="number">0.7421</span>, <span class="number">0.0000</span>, <span class="number">0.8594</span>, <span class="number">0.0000</span>],</span><br><span class="line">        [<span class="number">0.1860</span>, <span class="number">0.0000</span>, <span class="number">0.8100</span>, <span class="number">0.0000</span>, <span class="number">0.5856</span>]])</span><br></pre></td></tr></table></figure></p>
+<p>dim=0 代表第一个维度作为依托，index是一个二维数组<br>[0,1,2,0,0]<br>[2,0,0,1,2]<br>那我们可以得到要覆盖10个位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[0,0];[1,1];[2,2];[0,3];[0,4]</span><br><span class="line">[2,0];[0,1];[0,2];[1,3];[2,4]</span><br></pre></td></tr></table></figure>
+<p>我简单理解就是：由于dim=0, 所以index中每个位置的值都占最后得到的位置坐标的第一个位置，第二个维度的值从０以此增加到shape-1。这样，例如src中(1,2)的值替换数据的（１，１）的值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">label <span class="comment"># shape必须时２维</span></span><br><span class="line">label = t.LongTensor(label)</span><br><span class="line">y_one_hot = t.zeros(batch_size,class_num).scatter_(<span class="number">1</span>,label,<span class="number">1</span>)</span><br><span class="line">print(y_one_hot)</span><br></pre></td></tr></table></figure></p>
+<h4 id="tensor-index-select-获得one-hot-编码"><a href="#tensor-index-select-获得one-hot-编码" class="headerlink" title="tensor.index_select 获得one hot 编码"></a>tensor.index_select 获得one hot 编码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensor.index_select( dim, index, out=<span class="literal">None</span>)</span><br><span class="line">dim : 指定按什么维度取tensor中的向量</span><br><span class="line">index : 是一个一维的张量。描述了按照dim维度取出tensor对应的index值的向量。</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ones = torch.sparse.torch.eye(class_num)</span><br><span class="line"><span class="comment"># 生成class_num*class_num的单位矩阵</span></span><br><span class="line"><span class="comment">#  例如：tensor([[1., 0., 0., 0.],</span></span><br><span class="line">   <span class="comment">#     [0., 1., 0., 0.],</span></span><br><span class="line">  <span class="comment">#      [0., 0., 1., 0.],</span></span><br><span class="line"> <span class="comment">#       [0., 0., 0., 1.]])</span></span><br><span class="line"> </span><br><span class="line">ones.index_select(<span class="number">0</span>,label)  <span class="comment"># label 必须是一维的，</span></span><br><span class="line"><span class="comment"># dim=0：按行来选择,label中的值就指明了按将行中的哪一列设置为１</span></span><br></pre></td></tr></table></figure>
+<h3 id="pytorch训练模型时代码结构"><a href="#pytorch训练模型时代码结构" class="headerlink" title="pytorch训练模型时代码结构"></a>pytorch训练模型时代码结构</h3><p><img src="https://s2.ax1x.com/2019/08/22/md8nMQ.png" alt="md8nMQ.png"></p>
+<h4 id="config：参数配置文件"><a href="#config：参数配置文件" class="headerlink" title="config：参数配置文件"></a><code>config</code>：参数配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class DefaultConfig(object):</span><br><span class="line">    model = &apos;ResNet34&apos;  # 使用的模型，名字必须与models/__init__.py中的名字一致</span><br><span class="line"></span><br><span class="line">    train_data_root = &apos;train_data/&apos;  # 训练集存放路径</span><br><span class="line">    test_data_root = &apos;test_data/&apos;  # 测试集存放路径</span><br><span class="line">    checkpoint_root = &apos;checkpoints/&apos;</span><br><span class="line">    load_model_path = None  # 加载预训练的模型的路径，为None代表不加载</span><br><span class="line"></span><br><span class="line">    batch_size = 64  # batch size</span><br><span class="line">    use_gpu = True  # user GPU or not</span><br><span class="line">    num_workers = 4  # how many workers for loading data</span><br><span class="line">    print_freq = 20  # print info every N batch</span><br><span class="line"></span><br><span class="line">    max_epoch = 200</span><br><span class="line">    lr = 0.005  # initial learning rate</span><br><span class="line"></span><br><span class="line">opt = DefaultConfig()</span><br></pre></td></tr></table></figure>
+<p>这样修改模型参数时更方便</p>
+<h4 id="models-存放基础模型和自定义模型"><a href="#models-存放基础模型和自定义模型" class="headerlink" title="models:存放基础模型和自定义模型"></a><code>models</code>:存放基础模型和自定义模型</h4><ul>
+<li>basicmodule.py<br>用来继承pytorch的<code>nn.Module</code>类的同时添加模型保存函数和模型加载函数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import torch as t</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class BasicModule(t.nn.Module):</span><br><span class="line">    # 封装基础的nn.Module函数</span><br><span class="line"></span><br><span class="line">    def __int__(self):</span><br><span class="line">        super(BasicModule, self).__init__()</span><br><span class="line">        self.modal_name = str(type(self))</span><br><span class="line"></span><br><span class="line">    def load(self, path):</span><br><span class="line">        # 加载指定路径的模型</span><br><span class="line">        self.load_state_dict(t.load(path))</span><br><span class="line"></span><br><span class="line">    def save(self, modalname, epoch=None):</span><br><span class="line">        # 保存模型</span><br><span class="line">        prefix = &apos;checkpoints/&apos; + modalname + &apos;_&apos; + str(epoch) + &apos;_&apos;</span><br><span class="line">        name = time.strftime(prefix + &apos;%m%d_%H:%M:%S.pth&apos;)</span><br><span class="line">        t.save(self.state_dict(), name)</span><br><span class="line">        return name</span><br><span class="line"></span><br><span class="line">    def forward(self, *input):</span><br><span class="line">        pass</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="自定义的函数"><a href="#自定义的函数" class="headerlink" title="自定义的函数"></a>自定义的函数</h4><p>这边就是定义自己的函数，注意一点就是新建的<code>__init__.py</code>文件中写入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from .resnet34 import ResNet34</span><br><span class="line">from .easynet import EasyNet</span><br></pre></td></tr></table></figure></p>
+<p>这样可以直接在<code>main.py</code>函数中直接引用<code>from models import ResNet34</code></p>
+<h4 id="main"><a href="#main" class="headerlink" title="main"></a>main</h4><p>主函数中定义<code>train</code>和<code>test</code>函数，为了方便执行，可以引入<code>fire</code>包<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">import</span> fire</span><br><span class="line">    fire.Fire()</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+    
+    <div>
+      
+      <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/blog/images/wechatpay.png" alt="强浩鹏 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>强浩鹏</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://qianghaopeng.gitee.io/blog/2019/08/22/图像分类实践1总结/" title="图像分类实践1总结">http://qianghaopeng.gitee.io/blog/2019/08/22/图像分类实践1总结/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/深度学习/" rel="tag"><i class="fa fa-tag"></i>深度学习</a>
+            
+              <a href="/blog/tags/图像分类，pytorch/" rel="tag"><i class="fa fa-tag"></i>图像分类，pytorch</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2019/08/22/ubuntu的小问题/" rel="next" title="ubuntu的小问题">
+                  <i class="fa fa-chevron-left"></i> ubuntu的小问题
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC80NjA5NC8yMjYwNQ"></div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/blog/images/my.jpg"
+      alt="强浩鹏">
+  <p class="site-author-name" itemprop="name">强浩鹏</p>
+  <div class="site-description motion-element" itemprop="description">Sharp tools make good work</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/blog/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/blog/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/tuoniaoren" title="GitHub &rarr; https://github.com/tuoniaoren" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="/blog/1244253818@qq.com" title="E-Mail &rarr; 1244253818@qq.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://weibo.com/6132591078" title="Weibo &rarr; https://weibo.com/6132591078" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i>Weibo</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://blog.csdn.net/qq_35296537" title="CSDN &rarr; https://blog.csdn.net/qq_35296537" rel="noopener" target="_blank"><i class="fa fa-fw fa-heartbeat"></i>CSDN</a>
+      </span>
+    
+  </div>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据集小导致过拟合"><span class="nav-number">1.</span> <span class="nav-text">数据集小导致过拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pytorch的问题"><span class="nav-number">2.</span> <span class="nav-text">pytorch的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#维度不一致"><span class="nav-number">2.1.</span> <span class="nav-text">维度不一致</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch中，将label变成one-hot编码的形式"><span class="nav-number">2.2.</span> <span class="nav-text">pytorch中，将label变成one hot编码的形式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#scatter-获得one-hot-编码"><span class="nav-number">2.2.1.</span> <span class="nav-text">scatter_获得one hot 编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tensor-index-select-获得one-hot-编码"><span class="nav-number">2.2.2.</span> <span class="nav-text">tensor.index_select 获得one hot 编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pytorch训练模型时代码结构"><span class="nav-number">2.3.</span> <span class="nav-text">pytorch训练模型时代码结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#config：参数配置文件"><span class="nav-number">2.3.1.</span> <span class="nav-text">config：参数配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#models-存放基础模型和自定义模型"><span class="nav-number">2.3.2.</span> <span class="nav-text">models:存放基础模型和自定义模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义的函数"><span class="nav-number">2.3.3.</span> <span class="nav-text">自定义的函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#main"><span class="nav-number">2.3.4.</span> <span class="nav-text">main</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <span id="sitetime"></span>
+<script language=javascript>
+    function siteTime(){
+        window.setTimeout("siteTime()", 1000);
+        var seconds = 1000;
+        var minutes = seconds * 60;
+        var hours = minutes * 60;
+        var days = hours * 24;
+        var years = days * 365;
+        var today = new Date();
+        var todayYear = today.getFullYear();
+        var todayMonth = today.getMonth()+1;
+        var todayDate = today.getDate();
+        var todayHour = today.getHours();
+        var todayMinute = today.getMinutes();
+        var todaySecond = today.getSeconds();
+        /* Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+        year - 作为date对象的年份，为4位年份值
+        month - 0-11之间的整数，做为date对象的月份
+        day - 1-31之间的整数，做为date对象的天数
+        hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+        minutes - 0-59之间的整数，做为date对象的分钟数
+        seconds - 0-59之间的整数，做为date对象的秒数
+        microseconds - 0-999之间的整数，做为date对象的毫秒数 */
+        var t1 = Date.UTC(2019,08,15,15,00,00); //北京时间2018-2-13 00:00:00
+        var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+        var diff = t2-t1;
+        var diffYears = Math.floor(diff/years);
+        var diffDays = Math.floor((diff/days)-diffYears*365);
+        var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+        var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+        var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+        document.getElementById("sitetime").innerHTML=" 已运行"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+    }/*因为建站时间还没有一年，就将之注释掉了。需要的可以取消*/
+    siteTime();
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-强浩鹏"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">强浩鹏</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    
+    <span title="站点总字数">14k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    
+    <span title="站点阅读时长">13 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+  <div class="addthis_inline_share_toolbox">
+  <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5d561d7780745ba9" async="async"></script>
+</div>
+
+
+  </div>
+
+  
+    
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/blog/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/blog/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/blog/js/utils.js?v=7.3.0"></script>
+  <script src="/blog/js/motion.js?v=7.3.0"></script>
+
+<script src="/blog/js/schemes/pisces.js?v=7.3.0"></script>
+
+
+
+<script src="/blog/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/blog/js/scrollspy.js?v=7.3.0"></script>
+<script src="/blog/js/post-details.js?v=7.3.0"></script>
+
+
+    
+<script>
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+</script>
+
+</body>
+</html>
