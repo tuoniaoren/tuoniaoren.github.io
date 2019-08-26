@@ -56,17 +56,20 @@
 </script>
 
   <meta name="description" content="前言： 主要记录一些自己使用ubuntu18.04为主要操作系统中遇到的小问题，随时添加">
-<meta name="keywords" content="ubuntu">
+<meta name="keywords" content="ubuntu,ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu的小问题">
 <meta property="og:url" content="http://qianghaopeng.gitee.io/blog/2019/08/22/ubuntu的小问题/index.html">
 <meta property="og:site_name" content="Ranger&#39;s blog">
 <meta property="og:description" content="前言： 主要记录一些自己使用ubuntu18.04为主要操作系统中遇到的小问题，随时添加">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-22T05:53:01.514Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/26/mWzD0I.jpg">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/26/mWz6tf.jpg">
+<meta property="og:updated_time" content="2019-08-26T08:11:29.481Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu的小问题">
 <meta name="twitter:description" content="前言： 主要记录一些自己使用ubuntu18.04为主要操作系统中遇到的小问题，随时添加">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/26/mWzD0I.jpg">
   <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/2019/08/22/ubuntu的小问题/">
 
 
@@ -260,11 +263,19 @@
                 
               
 
-              <time title="创建时间：2019-08-22 13:51:23 / 修改时间：13:53:01" itemprop="dateCreated datePublished" datetime="2019-08-22T13:51:23+08:00">2019-08-22</time>
+              <time title="创建时间：2019-08-22 13:51:23" itemprop="dateCreated datePublished" datetime="2019-08-22T13:51:23+08:00">2019-08-22</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-26 16:11:29" itemprop="dateModified" datetime="2019-08-26T16:11:29+08:00">2019-08-26</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -298,7 +309,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>431</span>
+              <span>1.3k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -324,18 +335,30 @@
         <p>前言：</p>
 <p>主要记录一些自己使用ubuntu18.04为主要操作系统中遇到的小问题，随时添加</p>
 <a id="more"></a>
+<h2 id="删除问题"><a href="#删除问题" class="headerlink" title="删除问题"></a>删除问题</h2><p>  ubuntu中删除的命令是<code>sudo rm</code>，但是删除时要时刻注意自己要删除的文件中是否还有自己需要的，数据无价。</p>
+<p>  该命令中我们常用的参数有：</p>
+<p>  １、<code>sudo rm -rf</code> :　删除目录以及子目录文件时，不进行删除询问，适合自己已经了解到了该文件夹的内容。</p>
+<p>  ２、　<code>sudo rm -ri</code>：删除时，进行是否删除的询问，在一些比较重要的文件中删除时，建议采用该命令</p>
+<h2 id="使用ubuntu商店下载软件时的问题"><a href="#使用ubuntu商店下载软件时的问题" class="headerlink" title="使用ubuntu商店下载软件时的问题"></a>使用ubuntu商店下载软件时的问题</h2><p>  ubuntu18.04的商店已经有了丰富的软件，很多之前安装比较麻烦的软件都得到了很好的支持。有时安装一些软件时，会出现<strong>has install-snap change in progress</strong>，原因是之前安装过，但是没有安装好。解决办法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">snap changes #查看软件错误的ＩＤ，假设是１０</span><br><span class="line">sudo snap abort 10　　＃终止ID为10的。</span><br></pre></td></tr></table></figure></p>
+<h2 id="vim基本快捷键学习"><a href="#vim基本快捷键学习" class="headerlink" title="vim基本快捷键学习"></a>vim基本快捷键学习</h2><p>前言：在训练模型时，有时候会用到云服务器，我一般采用终端进行控制，即没有图像界面，这样就会有个问题，当代码出现问题时，由于不会vim，就只能重新本地修改再上传，很麻烦。需要记住几个vim的简单快捷键，方便在终端做一些简单的代码修改。</p>
 <ul>
-<li><p>删除问题</p>
-<p>ubuntu中删除的命令是<code>sudo rm</code>，但是删除时要时刻注意自己要删除的文件中是否还有自己需要的，数据无价。</p>
-<p>该命令中我们常用的参数有：</p>
-<p>１、<code>sudo rm -rf</code> :　删除目录以及子目录文件时，不进行删除询问，适合自己已经了解到了该文件夹的内容。</p>
-<p>２、　<code>sudo rm -ri</code>：删除时，进行是否删除的询问，在一些比较重要的文件中删除时，建议采用该命令</p>
+<li>首先输入<code>vim 文件名</code>即可进入vim编辑下</li>
+<li>方向键：<br><code>h</code>：左移光标<br><code>j</code>： 下移光标<br><code>k</code>：上移光标<br><code>l</code>：右移光标</li>
+<li>进入编辑模式：<br><code>i</code>：在光标前面进入插入<br><code>I</code>：在光标所在行的行首进入插入<br><code>a</code>：在光标后面进入插入<br><code>A</code>：在光标所在行的行尾进入插入<br><code>o</code>：在光标所在行的下方插入空行进入插入<br><code>O</code>：在光标所在行的上方插入空行进入插入<br><code>s</code>：删除光标指定的字符进入插入<br><code>S</code>：删除光标所在行并进入插入</li>
+<li>按<code>Esc</code>退出插入模式</li>
+<li>退出vim<br><code>:q!</code>：不保存直接退出<br><code>:wq</code>或者<code>shitf+z+z</code>即两个大写的z：保存退出</li>
+</ul>
+<h2 id="SSH的使用"><a href="#SSH的使用" class="headerlink" title="SSH的使用"></a>SSH的使用</h2><p>自己有台win10的笔记本和一台Ubuntu18.04的台式机，平常两台机器传送文件都是用U盘，很麻烦，现在换用SSH，以下场景是两台机器在同一路由下，即在同一局域网下。当二者不在局域网下时，还是采用teamviewer的文件传输功能。</p>
+<h3 id="安装ssh"><a href="#安装ssh" class="headerlink" title="安装ssh"></a>安装ssh</h3><ul>
+<li><p>ubuntu直接在终端输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>使用ubuntu商店下载软件时的问题</p>
-<p>ubuntu18.04的商店已经有了丰富的软件，很多之前安装比较麻烦的软件都得到了很好的支持。有时安装一些软件时，会出现<strong>has install-snap change in progress</strong>，原因是之前安装过，但是没有安装好。解决办法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">snap changes #查看软件错误的ＩＤ，假设是１０</span><br><span class="line">sudo snap abort 10　　＃终止ID为10的。</span><br></pre></td></tr></table></figure>
+<li><p>win10就到openssh的官网下载安装即可</p>
+<h3 id="功能一-终端控制"><a href="#功能一-终端控制" class="headerlink" title="功能一 终端控制"></a>功能一 终端控制</h3><p>安装好之后，win10可以下载<code>putty</code>作为终端链接工具，在Ubuntu的终端下输入<code>ifconfig</code>，可能会提示没有该工具，安装即可。查看并记录自己Ubuntu的局域网内的ip，这个很关键。若想在win10通过终端控制ubuntu，打开putty，输入Ubuntu的ip即可。<br><a href="https://imgchr.com/i/mWzD0I" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2019/08/26/mWzD0I.jpg" alt="mWzD0I.jpg"></a></p>
 </li>
 </ul>
+<h3 id="功能二-文件传输"><a href="#功能二-文件传输" class="headerlink" title="功能二 文件传输"></a>功能二 文件传输</h3><p>在win10中，可以在cmd中输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp 文件名 ubuntu用户名@ip地址:存放的目录</span><br></pre></td></tr></table></figure></p>
+<p>但是Ubuntu通过该指令传到win10时，权限问题有点多，我不想搞，所以在win10安装了<code>filezilla</code>基于openssh的文件传输客户端。可以win10到Ubuntu相互传，就想teamviewer的文件传输功能。<br><img src="https://s2.ax1x.com/2019/08/26/mWz6tf.jpg" alt="mWz6tf.jpg"></p>
 
     </div>
 
@@ -396,6 +419,8 @@
             
               <a href="/blog/tags/ubuntu/" rel="tag"><i class="fa fa-tag"></i>ubuntu</a>
             
+              <a href="/blog/tags/ssh/" rel="tag"><i class="fa fa-tag"></i>ssh</a>
+            
           </div>
         
 
@@ -455,8 +480,17 @@
 
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -535,7 +569,9 @@
         
           
         
-        <span class="site-state-item-count">11</span>
+          
+        
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -592,6 +628,23 @@
 
         </div>
       </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除问题"><span class="nav-number">1.</span> <span class="nav-text">删除问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用ubuntu商店下载软件时的问题"><span class="nav-number">2.</span> <span class="nav-text">使用ubuntu商店下载软件时的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim基本快捷键学习"><span class="nav-number">3.</span> <span class="nav-text">vim基本快捷键学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH的使用"><span class="nav-number">4.</span> <span class="nav-text">SSH的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装ssh"><span class="nav-number">4.1.</span> <span class="nav-text">安装ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能一-终端控制"><span class="nav-number">4.2.</span> <span class="nav-text">功能一 终端控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#功能二-文件传输"><span class="nav-number">4.3.</span> <span class="nav-text">功能二 文件传输</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
         <div class="back-to-top motion-element">
           <i class="fa fa-arrow-up"></i>
           
@@ -657,14 +710,14 @@
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">15k</span>
+    <span title="站点总字数">16k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">14 分钟</span>
+    <span title="站点阅读时长">15 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>

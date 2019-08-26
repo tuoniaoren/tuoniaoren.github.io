@@ -27,12 +27,13 @@
   <entry>
     <title><![CDATA[ubuntu的小问题]]></title>
     <url>%2Fblog%2F2019%2F08%2F22%2Fubuntu%E7%9A%84%E5%B0%8F%E9%97%AE%E9%A2%98%2F</url>
-    <content type="text"><![CDATA[前言： 主要记录一些自己使用ubuntu18.04为主要操作系统中遇到的小问题，随时添加 删除问题 ubuntu中删除的命令是sudo rm，但是删除时要时刻注意自己要删除的文件中是否还有自己需要的，数据无价。 该命令中我们常用的参数有： １、sudo rm -rf : 删除目录以及子目录文件时，不进行删除询问，适合自己已经了解到了该文件夹的内容。 ２、 sudo rm -ri：删除时，进行是否删除的询问，在一些比较重要的文件中删除时，建议采用该命令 使用ubuntu商店下载软件时的问题 ubuntu18.04的商店已经有了丰富的软件，很多之前安装比较麻烦的软件都得到了很好的支持。有时安装一些软件时，会出现has install-snap change in progress，原因是之前安装过，但是没有安装好。解决办法： 12snap changes #查看软件错误的ＩＤ，假设是１０sudo snap abort 10 ＃终止ID为10的。]]></content>
+    <content type="text"><![CDATA[前言： 主要记录一些自己使用ubuntu18.04为主要操作系统中遇到的小问题，随时添加 删除问题 ubuntu中删除的命令是sudo rm，但是删除时要时刻注意自己要删除的文件中是否还有自己需要的，数据无价。 该命令中我们常用的参数有： １、sudo rm -rf : 删除目录以及子目录文件时，不进行删除询问，适合自己已经了解到了该文件夹的内容。 ２、 sudo rm -ri：删除时，进行是否删除的询问，在一些比较重要的文件中删除时，建议采用该命令 使用ubuntu商店下载软件时的问题 ubuntu18.04的商店已经有了丰富的软件，很多之前安装比较麻烦的软件都得到了很好的支持。有时安装一些软件时，会出现has install-snap change in progress，原因是之前安装过，但是没有安装好。解决办法：12snap changes #查看软件错误的ＩＤ，假设是１０sudo snap abort 10 ＃终止ID为10的。 vim基本快捷键学习前言：在训练模型时，有时候会用到云服务器，我一般采用终端进行控制，即没有图像界面，这样就会有个问题，当代码出现问题时，由于不会vim，就只能重新本地修改再上传，很麻烦。需要记住几个vim的简单快捷键，方便在终端做一些简单的代码修改。 首先输入vim 文件名即可进入vim编辑下 方向键：h：左移光标j： 下移光标k：上移光标l：右移光标 进入编辑模式：i：在光标前面进入插入I：在光标所在行的行首进入插入a：在光标后面进入插入A：在光标所在行的行尾进入插入o：在光标所在行的下方插入空行进入插入O：在光标所在行的上方插入空行进入插入s：删除光标指定的字符进入插入S：删除光标所在行并进入插入 按Esc退出插入模式 退出vim:q!：不保存直接退出:wq或者shitf+z+z即两个大写的z：保存退出 SSH的使用自己有台win10的笔记本和一台Ubuntu18.04的台式机，平常两台机器传送文件都是用U盘，很麻烦，现在换用SSH，以下场景是两台机器在同一路由下，即在同一局域网下。当二者不在局域网下时，还是采用teamviewer的文件传输功能。 安装ssh ubuntu直接在终端输入 1sudo apt install openssh-server win10就到openssh的官网下载安装即可 功能一 终端控制安装好之后，win10可以下载putty作为终端链接工具，在Ubuntu的终端下输入ifconfig，可能会提示没有该工具，安装即可。查看并记录自己Ubuntu的局域网内的ip，这个很关键。若想在win10通过终端控制ubuntu，打开putty，输入Ubuntu的ip即可。 功能二 文件传输在win10中，可以在cmd中输入1scp 文件名 ubuntu用户名@ip地址:存放的目录 但是Ubuntu通过该指令传到win10时，权限问题有点多，我不想搞，所以在win10安装了filezilla基于openssh的文件传输客户端。可以win10到Ubuntu相互传，就想teamviewer的文件传输功能。]]></content>
       <categories>
         <category>ubuntu</category>
       </categories>
       <tags>
         <tag>ubuntu</tag>
+        <tag>ssh</tag>
       </tags>
   </entry>
   <entry>
