@@ -65,7 +65,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/1.png">
 <meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/奇异值分解/2.png">
-<meta property="og:updated_time" content="2019-08-17T06:18:23.290Z">
+<meta property="og:updated_time" content="2019-08-27T01:37:25.144Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="奇异值分解">
 <meta name="twitter:description" content="奇异值分解（SVD）的原理与在降维中的应用 总结原理并讨论在PCA降维算法中如何运用SVD">
@@ -263,11 +263,19 @@
                 
               
 
-              <time title="创建时间：2019-08-17 14:10:55 / 修改时间：14:18:23" itemprop="dateCreated datePublished" datetime="2019-08-17T14:10:55+08:00">2019-08-17</time>
+              <time title="创建时间：2019-08-17 14:10:55" itemprop="dateCreated datePublished" datetime="2019-08-17T14:10:55+08:00">2019-08-17</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-08-27 09:37:25" itemprop="dateModified" datetime="2019-08-27T09:37:25+08:00">2019-08-27</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -795,6 +803,58 @@
 
   
 
+  
+    
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   
