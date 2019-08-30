@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu18.0配置远程SSH]]></title>
+    <url>%2Fblog%2F2019%2F08%2F30%2Fubuntu18-04%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8BSSH%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[ubuntu18.04配置远程SSH]]></title>
+    <url>%2Fblog%2F2019%2F08%2F30%2Fubuntu18-0%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8BSSH%2F</url>
+    <content type="text"><![CDATA[前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook 安装openssh1sudo apt install openssh-server 这时通过ifconfig就可以查看到本机在内网中的ip地址。 设置jupyter notebook 生成配置文件1jupyter notebook --generate-config 此时会得到配置文件，其默认路径一般如下：~/.jupyter/jupyter_notebook_config.py 设置登录密码 123$jupyter notebook passwordEnter password: yourcode #输入密码Verify password: yourcodeagain #再次输入密码确认 修改配置文件 1234#把前面的#去掉c.NotebookApp.ip = &apos;*&apos; #允许所有ip访问 补充:报错 No address associated with hostname可设置为:&apos;0.0.0.0&apos;c.NotebookApp.open_browser = False #不打开浏览器c.NotebookApp.port = 8888 #端口为8888 这样，我们在内网中的电脑就可以访问开启jupyternotebook服务的台式机，在浏览器中输入之前ifconfig查到的ip加上:端口号（我们设置的是:8888)就可以直接访问jupyternotebook，此外也可以用putty进行ssh的终端进行访问 内网穿透我采用了花生壳的个人服务，首先是下载花生壳的Ubuntu版本，其次安装时进入管理员模式12sudo sudpkg -i phddns----.deb 安装之后会得到sn秘钥，一定要记录下这个秘钥，密码默认时admin之后开启服务1phddns start 注册花生壳时会得到一个免费域名 点击内网穿透 新建内网穿透 新键一个内网穿透进行设置端口映射之后可以进行外网访问，不过就是流量有点少，就只有1个G，用来应对有时候teamviewer连接不到服务器的情况吧。 参考 JupyterNotebook配置远程登录 花生壳关于Linux下的安装说明]]></content>
+      <categories>
+        <category>环境安装</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+        <tag>SSH</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubuntu18.04安装和设置深度终端]]></title>
     <url>%2Fblog%2F2019%2F08%2F24%2Fubuntu18-04%E5%AE%89%E8%A3%85%E5%92%8C%E8%AE%BE%E7%BD%AE%E6%B7%B1%E5%BA%A6%E7%BB%88%E7%AB%AF%2F</url>
     <content type="text"><![CDATA[前言：Ubuntu18.04的终端太难用，有比较好的选择是terminator和深度终端。安装了terminator后，利用快捷键Ctrl+Alt+t，打开的就是terminator，Ubuntu已经把默认的打开变成了terminator，但是右键在文件打开依旧是Ubuntu的自带终端。所以设置右键在文件中打开terminator或者深度终端（deepin） 安装terminator和深度终端安装方式还是比较简单的。对于terminator来说，可以直接在终端中输入1sudo apt install terminator 对于深度终端，可以直接在Ubuntu的商店中，搜索深度终端，就可以安装使用了非常方便，deepin是国内很优秀的Linux操作系统，点赞！我使用深度终端，但是terminator配置右键的方法和深度终端是一样的。 安装Nautilus Actions我查到的文件管理器扩展，但是由于Ubuntu不在维护这个扩展，现在不能直接下载，它已被重命名为FileManager actions。安装步骤： 添加软件源： 1sudo add-apt-repository ppa:daniel-marynicz/filemanager-actions 安装扩展插件： 12sudo apt updatesudo apt install filemanager-actions-nautilus-extension 安装完成就可以在启动程序界面找到FileManager Actions卸载方式：1sudo apt remove --autoremove filemanager-actions 设置右键在文件夹中启动深度终端 打开FileManager Actions软件 首先点文件-新建动作 在动作选项卡中进行如下设置 在命令选项卡中进行如下设置其中：路径：/usr/bin/deepin-terminal参数：--working-directory=%d/%b工作目录：%d/%b 在配置将菜单布局中第一项取消勾选重启电脑之后即设置完成演示：由于在桌面打开深度终端，默认在/目录下，深度终端中设置了快捷键，直接cd 到用户目录。参考：https://www.linuxidc.com/Linux/2019-01/156228.htmhttps://blog.csdn.net/zhanghm1995/article/details/89419109]]></content>
