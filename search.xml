@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[ubuntu18.0配置远程SSH]]></title>
-    <url>%2Fblog%2F2019%2F08%2F30%2Fubuntu18-04%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8BSSH%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[ubuntu18.04配置远程SSH]]></title>
-    <url>%2Fblog%2F2019%2F08%2F30%2Fubuntu18-0%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8BSSH%2F</url>
-    <content type="text"><![CDATA[前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook 安装openssh1sudo apt install openssh-server 这时通过ifconfig就可以查看到本机在内网中的ip地址。 设置jupyter notebook 生成配置文件1jupyter notebook --generate-config 此时会得到配置文件，其默认路径一般如下：~/.jupyter/jupyter_notebook_config.py 设置登录密码 123$jupyter notebook passwordEnter password: yourcode #输入密码Verify password: yourcodeagain #再次输入密码确认 修改配置文件 1234#把前面的#去掉c.NotebookApp.ip = &apos;*&apos; #允许所有ip访问 补充:报错 No address associated with hostname可设置为:&apos;0.0.0.0&apos;c.NotebookApp.open_browser = False #不打开浏览器c.NotebookApp.port = 8888 #端口为8888 这样，我们在内网中的电脑就可以访问开启jupyternotebook服务的台式机，在浏览器中输入之前ifconfig查到的ip加上:端口号（我们设置的是:8888)就可以直接访问jupyternotebook，此外也可以用putty进行ssh的终端进行访问 内网穿透我采用了花生壳的个人服务，首先是下载花生壳的Ubuntu版本，其次安装时进入管理员模式12sudo sudpkg -i phddns----.deb 安装之后会得到sn秘钥，一定要记录下这个秘钥，密码默认时admin之后开启服务1phddns start 注册花生壳时会得到一个免费域名 点击内网穿透 新建内网穿透 新键一个内网穿透进行设置端口映射之后可以进行外网访问，不过就是流量有点少，就只有1个G，用来应对有时候teamviewer连接不到服务器的情况吧。 参考 JupyterNotebook配置远程登录 花生壳关于Linux下的安装说明]]></content>
+    <title><![CDATA[ubuntu配置远程SSH]]></title>
+    <url>%2Fblog%2F2019%2F08%2F30%2Fubuntu%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8BSSH%2F</url>
+    <content type="text"><![CDATA[前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook 安装openssh1sudo apt install openssh-server 这时通过ifconfig就可以查看到本机在内网中的ip地址。 设置jupyter notebook 生成配置文件1jupyter notebook --generate-config 此时会得到配置文件，其默认路径一般如下：~/.jupyter/jupyter_notebook_config.py 设置登录密码 123$jupyter notebook passwordEnter password: yourcode #输入密码Verify password: yourcodeagain #再次输入密码确认 修改配置文件 1234#把前面的#去掉c.NotebookApp.ip = &apos;*&apos; #允许所有ip访问 补充:报错 No address associated with hostname可设置为:&apos;0.0.0.0&apos;c.NotebookApp.open_browser = False #不打开浏览器c.NotebookApp.port = 8888 #端口为8888 这样，我们在内网中的电脑就可以访问开启jupyternotebook服务的台式机，在浏览器中输入之前ifconfig查到的ip加上:端口号（我们设置的是:8888)就可以直接访问jupyternotebook，此外也可以用putty进行ssh的终端进行访问 内网穿透我采用了花生壳的个人服务，首先是下载花生壳的Ubuntu版本，其次安装时进入管理员模式12sudo sudpkg -i phddns----.deb 安装之后会得到sn秘钥，一定要记录下这个秘钥，密码默认时admin之后开启服务1phddns start 注册花生壳时会得到一个免费域名 点击内网穿透 新建内网穿透 新键一个内网穿透进行设置端口映射之后可以进行外网访问，不过就是流量有点少，就只有1个G，用来应对有时候teamviewer连接不到服务器的情况吧。参考JupyterNotebook配置远程登录花生壳关于Linux下的安装说明]]></content>
       <categories>
         <category>环境安装</category>
       </categories>

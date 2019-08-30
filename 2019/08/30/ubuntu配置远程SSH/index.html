@@ -55,24 +55,23 @@
   };
 </script>
 
-  <meta name="description" content="当我们在本地运行好博客时，可以将它部署到免费的公共仓库来实现在线查看，主要的仓库网站有github和码云。github由于是美国网站，我们学校的网络push代码很慢，所以我选择了国内的网站码云。以下是码云的部署过程，github与之类似。">
-<meta name="keywords" content="部署">
+  <meta name="description" content="前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook">
+<meta name="keywords" content="ubuntu,SSH">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo-next博客搭建3-部署">
-<meta property="og:url" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/index.html">
+<meta property="og:title" content="ubuntu配置远程SSH">
+<meta property="og:url" content="http://qianghaopeng.gitee.io/blog/2019/08/30/ubuntu配置远程SSH/index.html">
 <meta property="og:site_name" content="Ranger&#39;s blog">
-<meta property="og:description" content="当我们在本地运行好博客时，可以将它部署到免费的公共仓库来实现在线查看，主要的仓库网站有github和码云。github由于是美国网站，我们学校的网络push代码很慢，所以我选择了国内的网站码云。以下是码云的部署过程，github与之类似。">
+<meta property="og:description" content="前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/1.jpg">
-<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/2.jpg">
-<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/3.jpg">
-<meta property="og:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/4.jpg">
-<meta property="og:updated_time" content="2019-08-17T02:37:59.818Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/30/mXWFmj.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/30/mXWk0s.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/08/30/mXWPXQ.png">
+<meta property="og:updated_time" content="2019-08-30T07:51:32.801Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo-next博客搭建3-部署">
-<meta name="twitter:description" content="当我们在本地运行好博客时，可以将它部署到免费的公共仓库来实现在线查看，主要的仓库网站有github和码云。github由于是美国网站，我们学校的网络push代码很慢，所以我选择了国内的网站码云。以下是码云的部署过程，github与之类似。">
-<meta name="twitter:image" content="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/1.jpg">
-  <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/">
+<meta name="twitter:title" content="ubuntu配置远程SSH">
+<meta name="twitter:description" content="前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/08/30/mXWFmj.png">
+  <link rel="canonical" href="http://qianghaopeng.gitee.io/blog/2019/08/30/ubuntu配置远程SSH/">
 
 
 <script id="page-configurations">
@@ -86,7 +85,7 @@
   };
 </script>
 
-  <title>hexo-next博客搭建3-部署 | Ranger's blog</title>
+  <title>ubuntu配置远程SSH | Ranger's blog</title>
   
 
 
@@ -234,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qianghaopeng.gitee.io/blog/blog/2019/08/17/hexo-next博客搭建3/">
+    <link itemprop="mainEntityOfPage" href="http://qianghaopeng.gitee.io/blog/blog/2019/08/30/ubuntu配置远程SSH/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="强浩鹏">
@@ -248,7 +247,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">hexo-next博客搭建3-部署
+          <h1 class="post-title" itemprop="name headline">ubuntu配置远程SSH
 
             
           </h1>
@@ -265,7 +264,7 @@
                 
               
 
-              <time title="创建时间：2019-08-17 10:33:15 / 修改时间：10:37:59" itemprop="dateCreated datePublished" datetime="2019-08-17T10:33:15+08:00">2019-08-17</time>
+              <time title="创建时间：2019-08-30 15:48:17 / 修改时间：15:51:32" itemprop="dateCreated datePublished" datetime="2019-08-30T15:48:17+08:00">2019-08-30</time>
             </span>
           
             
@@ -278,7 +277,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/环境安装/" itemprop="url" rel="index"><span itemprop="name">环境安装</span></a></span>
 
                 
                 
@@ -303,7 +302,7 @@
               
                 <span class="post-meta-item-text">本文字数：</span>
               
-              <span>681</span>
+              <span>1.1k</span>
             </span>
           
             <span class="post-meta-item" title="阅读时长">
@@ -326,24 +325,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>当我们在本地运行好博客时，可以将它部署到免费的公共仓库来实现在线查看，主要的仓库网站有<a href="https://github.com/" target="_blank" rel="noopener">github</a>和<a href="https://gitee.com/" target="_blank" rel="noopener">码云</a>。github由于是美国网站，我们学校的网络push代码很慢，所以我选择了国内的网站码云。以下是码云的部署过程，github与之类似。</p>
-<a id="more"></a>
-<h2 id="申请Gitee账号"><a href="#申请Gitee账号" class="headerlink" title="申请Gitee账号"></a>申请Gitee账号</h2><h2 id="创建项目并设置"><a href="#创建项目并设置" class="headerlink" title="创建项目并设置"></a>创建项目并设置</h2><p>首先新建仓库</p>
-<img src="/blog/2019/08/17/hexo-next博客搭建3/1.jpg">
-<p>然后进行如下设置</p>
-<img src="/blog/2019/08/17/hexo-next博客搭建3/2.jpg">
-<h2 id="在站点配置文件-config-yml中配置Git"><a href="#在站点配置文件-config-yml中配置Git" class="headerlink" title="在站点配置文件_config.yml中配置Git"></a>在站点配置文件_config.yml中配置Git</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: https://gitee.com/QiangHaopeng/blog.git #上图中3的链接</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<p>注意： 冒号后面要有空格</p>
-<h2 id="发布到Gitee"><a href="#发布到Gitee" class="headerlink" title="发布到Gitee"></a>发布到Gitee</h2><p>git bash中输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save #安装自动部署发布工具</span><br><span class="line">hexo clean</span><br><span class="line">hexo g #生成</span><br><span class="line">hexo d #利用git将静态网站推送到Gitee的仓库中</span><br></pre></td></tr></table></figure></p>
-<p>首次发布需要输入Gitee的账号和密码</p>
-<h2 id="Gitee的pages服务开启"><a href="#Gitee的pages服务开启" class="headerlink" title="Gitee的pages服务开启"></a>Gitee的pages服务开启</h2><p>选择仓库的服务</p>
-<img src="/blog/2019/08/17/hexo-next博客搭建3/3.jpg">
-<p>然后开启pages服务</p>
-<img src="/blog/2019/08/17/hexo-next博客搭建3/4.jpg">
-<p>首次是开启，得到得到自己的博客链接<code>http://qianghaopeng.gitee.io/blog</code></p>
-<h2 id="在站点配置文件-config-yml中配置博客地址"><a href="#在站点配置文件-config-yml中配置博客地址" class="headerlink" title="在站点配置文件_config.yml中配置博客地址"></a>在站点配置文件_config.yml中配置博客地址</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url: http://qianghaopeng.gitee.io/blog</span><br><span class="line">root: /blog</span><br></pre></td></tr></table></figure>
-<p>再执行命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g #生成</span><br><span class="line">hexo d #利用git将静态网站推送到Gitee的仓库中</span><br></pre></td></tr></table></figure></p>
-<p>然后更新Gitee Pages<br>过一段就能在自己的博客链接看到自己的博客主页了。</p>
+        <p>前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook<br><a id="more"></a></p>
+<h2 id="安装openssh"><a href="#安装openssh" class="headerlink" title="安装openssh"></a>安装openssh</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
+<p>这时通过<code>ifconfig</code>就可以查看到本机在内网中的ip地址。</p>
+<h2 id="设置jupyter-notebook"><a href="#设置jupyter-notebook" class="headerlink" title="设置jupyter notebook"></a>设置jupyter notebook</h2><ul>
+<li>生成配置文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook --generate-config</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>此时会得到配置文件，其默认路径一般如下：<br><code>~/.jupyter/jupyter_notebook_config.py</code></p>
+<ul>
+<li><p>设置登录密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$jupyter notebook password</span><br><span class="line">Enter password:  yourcode  #输入密码</span><br><span class="line">Verify password: yourcodeagain   #再次输入密码确认</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>修改配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#把前面的#去掉</span><br><span class="line">c.NotebookApp.ip = &apos;*&apos;    #允许所有ip访问  补充:报错 No address associated with hostname可设置为:&apos;0.0.0.0&apos;</span><br><span class="line">c.NotebookApp.open_browser = False    #不打开浏览器</span><br><span class="line">c.NotebookApp.port = 8888             #端口为8888</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这样，我们在内网中的电脑就可以访问开启jupyternotebook服务的台式机，在浏览器中输入之前<code>ifconfig</code>查到的ip加上<code>:端口号</code>（我们设置的是:8888)就可以直接访问jupyternotebook，此外也可以用putty进行ssh的终端进行访问</p>
+<h2 id="内网穿透"><a href="#内网穿透" class="headerlink" title="内网穿透"></a>内网穿透</h2><p>我采用了花生壳的个人服务，首先是下载花生壳的Ubuntu版本，其次安装时进入管理员模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo su</span><br><span class="line">dpkg -i phddns----.deb</span><br></pre></td></tr></table></figure></p>
+<p>安装之后会得到sn秘钥，一定要记录下这个秘钥，密码默认时admin<br>之后开启服务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phddns start</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>注册花生壳时会得到一个免费域名</li>
+<li>点击内网穿透<br><img src="https://s2.ax1x.com/2019/08/30/mXWFmj.png" alt="mXWFmj.png"></li>
+<li>新建内网穿透<br><img src="https://s2.ax1x.com/2019/08/30/mXWk0s.png" alt="mXWk0s.png"></li>
+<li>新键一个内网穿透进行设置端口映射<br><img src="https://s2.ax1x.com/2019/08/30/mXWPXQ.png" alt="mXWPXQ.png"><br>之后可以进行外网访问，不过就是流量有点少，就只有1个G，用来应对有时候teamviewer连接不到服务器的情况吧。<br><strong>参考</strong><br><a href="https://blog.csdn.net/u014636245/article/details/83652126" target="_blank" rel="noopener">JupyterNotebook配置远程登录</a><br><a href="http://service.oray.com/question/4287.html" target="_blank" rel="noopener">花生壳关于Linux下的安装说明</a></li>
+</ul>
 
     </div>
 
@@ -387,7 +393,7 @@
     <strong>本文作者： </strong>强浩鹏</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/" title="hexo-next博客搭建3-部署">http://qianghaopeng.gitee.io/blog/2019/08/17/hexo-next博客搭建3/</a>
+    <a href="http://qianghaopeng.gitee.io/blog/2019/08/30/ubuntu配置远程SSH/" title="ubuntu配置远程SSH">http://qianghaopeng.gitee.io/blog/2019/08/30/ubuntu配置远程SSH/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
@@ -402,7 +408,9 @@
           
           <div class="post-tags">
             
-              <a href="/blog/tags/部署/" rel="tag"><i class="fa fa-tag"></i>部署</a>
+              <a href="/blog/tags/ubuntu/" rel="tag"><i class="fa fa-tag"></i>ubuntu</a>
+            
+              <a href="/blog/tags/SSH/" rel="tag"><i class="fa fa-tag"></i>SSH</a>
             
           </div>
         
@@ -412,8 +420,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/blog/2019/08/17/hexo-next博客搭建2/" rel="next" title="hexo-next博客搭建2-设置">
-                  <i class="fa fa-chevron-left"></i> hexo-next博客搭建2-设置
+                <a href="/blog/2019/08/24/ubuntu18-04安装和设置深度终端/" rel="next" title="ubuntu18.04安装和设置深度终端">
+                  <i class="fa fa-chevron-left"></i> ubuntu18.04安装和设置深度终端
                 </a>
               
             </div>
@@ -421,10 +429,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/blog/2019/08/17/奇异值分解/" rel="prev" title="奇异值分解">
-                  奇异值分解 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -623,7 +627,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#申请Gitee账号"><span class="nav-number">1.</span> <span class="nav-text">申请Gitee账号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建项目并设置"><span class="nav-number">2.</span> <span class="nav-text">创建项目并设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在站点配置文件-config-yml中配置Git"><span class="nav-number">3.</span> <span class="nav-text">在站点配置文件_config.yml中配置Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布到Gitee"><span class="nav-number">4.</span> <span class="nav-text">发布到Gitee</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitee的pages服务开启"><span class="nav-number">5.</span> <span class="nav-text">Gitee的pages服务开启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在站点配置文件-config-yml中配置博客地址"><span class="nav-number">6.</span> <span class="nav-text">在站点配置文件_config.yml中配置博客地址</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装openssh"><span class="nav-number">1.</span> <span class="nav-text">安装openssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置jupyter-notebook"><span class="nav-number">2.</span> <span class="nav-text">设置jupyter notebook</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内网穿透"><span class="nav-number">3.</span> <span class="nav-text">内网穿透</span></a></li></ol></div>
             
 
           </div>
@@ -799,6 +803,58 @@
 
   
 
+  
+    
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
   
 
   
