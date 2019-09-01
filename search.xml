@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ubuntu远程控制win10]]></title>
+    <url>%2Fblog%2F2019%2F09%2F01%2Fubuntu%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6win10%2F</url>
+    <content type="text"><![CDATA[前言：由于目前我使用ubuntu18.04的台式机作为主力机器，有很多文件都放在win10的笔记本，自己的座位位置比较小，放台笔记本加散热器，再放一个显示器很拥挤，所以购买了笔记本立式支架，同时利用ubuntu的remmina软件进行远程桌面访问win10。本来自己用的远程控制软件时teamviewer，但是由于网络问题，teamviewer经常掉线，而且我的台式机和笔记本在同一路由下，采用remmina方案，既可以解决连接不稳定的问题，还可以解决空间小，还需要两套键鼠的问题，很好的解决了我现在的很多问题。 首先设置好win10在我的电脑右键-&gt;属性-&gt;远程控制勾选允许远程协助连接这台计算机，设置如下： 其次在ubuntu中打开remmina进行如图配置：首先输入win10的ip地址，用户名以及登陆密码，设置远程桌面时，显示的窗口的分辨率，建议自己调节着设置，调到适合自己，其次设置色深，要设置真彩色的方案，才能很好的显示win10的桌面，设置共享目录，可以在ubuntu的目录下创建一个文件夹，设置为共享文件，这样两个系统之间的文件传输就很方便，比我之前采用的filezilla方案方便太多了。]]></content>
+      <categories>
+        <category>环境安装</category>
+      </categories>
+      <tags>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ubuntu配置远程SSH]]></title>
     <url>%2Fblog%2F2019%2F08%2F30%2Fubuntu%E9%85%8D%E7%BD%AE%E8%BF%9C%E7%A8%8BSSH%2F</url>
     <content type="text"><![CDATA[前言：在Ubuntu系统中配置了openssh，这样可以远程访问台式机的jupyter notebook和terminator，但是只能局域网使用，查看资料使用花生壳的个人测试版（免费使用，两个内网穿透映射）进行内网穿透，从而达到在外网使用putty访问或者直接访问jupyter notebook 安装openssh1sudo apt install openssh-server 这时通过ifconfig就可以查看到本机在内网中的ip地址。 设置jupyter notebook 生成配置文件1jupyter notebook --generate-config 此时会得到配置文件，其默认路径一般如下：~/.jupyter/jupyter_notebook_config.py 设置登录密码 123$jupyter notebook passwordEnter password: yourcode #输入密码Verify password: yourcodeagain #再次输入密码确认 修改配置文件 1234#把前面的#去掉c.NotebookApp.ip = &apos;*&apos; #允许所有ip访问 补充:报错 No address associated with hostname可设置为:&apos;0.0.0.0&apos;c.NotebookApp.open_browser = False #不打开浏览器c.NotebookApp.port = 8888 #端口为8888 这样，我们在内网中的电脑就可以访问开启jupyternotebook服务的台式机，在浏览器中输入之前ifconfig查到的ip加上:端口号（我们设置的是:8888)就可以直接访问jupyternotebook，此外也可以用putty进行ssh的终端进行访问 内网穿透我采用了花生壳的个人服务，首先是下载花生壳的Ubuntu版本，其次安装时进入管理员模式12sudo sudpkg -i phddns----.deb 安装之后会得到sn秘钥，一定要记录下这个秘钥，密码默认时admin之后开启服务1phddns start 注册花生壳时会得到一个免费域名 点击内网穿透 新建内网穿透 新键一个内网穿透进行设置端口映射之后可以进行外网访问，不过就是流量有点少，就只有1个G，用来应对有时候teamviewer连接不到服务器的情况吧。参考JupyterNotebook配置远程登录花生壳关于Linux下的安装说明]]></content>
